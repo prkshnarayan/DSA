@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3-Day Python DSA Crash Course</title>
+  <style>
+    /* Base styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #222;
+      margin: 0;
+      padding: 20px 30px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: #2c3e50;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    h1 {
+      font-size: 2.5em;
+      border-bottom: 3px solid #2980b9;
+      padding-bottom: 0.3em;
+    }
+    h2 {
+      font-size: 1.8em;
+      border-left: 6px solid #2980b9;
+      padding-left: 10px;
+      background: #e3f2fd;
+      border-radius: 4px;
+    }
+    h3 {
+      font-size: 1.2em;
+      margin-top: 1.2em;
+      margin-bottom: 0.4em;
+      color: #34495e;
+    }
+
+    /* Code block styles */
+    pre {
+      background: #f9f9f9;        /* light background */
+      color: #2c3e50;             /* dark text */
+      padding: 15px 20px;
+      border-radius: 6px;
+      font-family: 'Fira Code', Consolas, Monaco, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 1.5em 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      box-shadow: inset 0 0 8px #ccc;
+      overflow-x: visible;       /* no horizontal scrollbar */
+      max-height: none;          /* no fixed height */
+    }
+
+    code {
+      font-family: 'Fira Code', Consolas, Monaco, monospace;
+      font-size: 14px;
+      color: #2c3e50;
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    /* Container for each day */
+    .day {
+      background: #fff;
+      padding: 25px 30px;
+      margin: 25px 0;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+      border-left: 8px solid #2980b9;
+    }
+
+    /* Highlight inline code */
+    .inline-code {
+      background: #ddd;
+      color: #c7254e;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.95em;
+    }
+
+    /* Large code block wrapper with no scroll */
+    .code-wrapper {
+      background: #fff;           /* slightly brighter */
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      /* Removed overflow-x and max-height */
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>3-Day Python DSA Crash Course</h1>
+
+  <!-- Large initial code snippet wrapped in container -->
+  <section aria-label="Additional Python Code Snippets" class="code-wrapper" role="region">
+    <h2>Additional Python Code Snippets</h2>
+
+    <h3>Pascal's Triangle</h3>
+    <pre><code>def pascal(n):
+    pat=[]
+    for i in range(n):
+        row=[1]*(i+1)
+        for j in range(1,i):
+            row[j]=pat[i-1][j-1] + pat[i-1][j]
+        pat.append(row)
+    for i in range(n):
+        print(' '*(n-i-1)*2,end=" ")
+        for j in pat[i]:
+            print(f'{j:4}',end='')
+        print()
+
+n=7
+print(pascal(n))
+</code></pre>
+
+    <h3>Maximum Subarray (Kadane's Algorithm)</h3>
+    <pre><code>def max_subarray(nums):
+    curr_sum = max_sum = nums[0]
+    for num in nums[1:]:
+        curr_sum = max(num, curr_sum + num)
+        max_sum = max(max_sum, curr_sum)
+    return max_sum
+
+l = list(map(int, input().split()))
+print(max_subarray(l))  # Example input: -2 2 -3 4 -1 2 1 -5 4
+</code></pre>
+
+    <h3>Rotate Matrix (90 degrees clockwise)</h3>
+    <pre><code>def rotate(matrix):
+    n = len(matrix)
+    for i in range(n):
+        for j in range(i+1, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    for row in matrix:
+        row.reverse()
+
+matrix = [list(map(int, input().split())) for _ in range(3)]
+rotate(matrix)
+for row in matrix:
+    print(row)
+</code></pre>
+
+    <h3>Find Duplicate in Array</h3>
+    <pre><code>def findDuplicate(nums):
+    nums.sort()
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i - 1]:
+            return nums[i]
+</code></pre>
+
+    <h3>Find Missing and Repeating Number</h3>
+    <pre><code>def find_missing_and_repeating(arr):
+    n = len(arr)
+    count = [0] * (n + 1)
+    for num in arr:
+        count[num] += 1
+
+    repeating = missing = -1
+    for i in range(1, n + 1):
+        if count[i] == 0:
+            missing = i
+        elif count[i] == 2:
+            repeating = i
+    return (repeating, missing)
+</code></pre>
+
+    <h3>Majority Element</h3>
+    <pre><code>from collections import Counter
+
+def majority_element(nums):
+    counts = Counter(nums)
+    for num, count in counts.items():
+        if count > len(nums) // 2:
+            return num
+</code></pre>
+
+    <h3>Two Sum</h3>
+    <pre><code>def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        diff = target - num
+        if diff in seen:
+            return [seen[diff], i]
+        seen[num] = i
+    return []
+
+print(two_sum([2, 7, 11, 15], 9))  # Output: [0, 1]
+</code></pre>
+
+    <h3>Longest Consecutive Sequence</h3>
+    <pre><code>def longest_consecutive(nums):
+    num_set = set(nums)
+    longest_streak = 0
+    for num in num_set:
+        if num - 1 not in num_set:
+            current_num = num
+            current_streak = 1
+            while current_num + 1 in num_set:
+                current_num += 1
+                current_streak += 1
+            longest_streak = max(longest_streak, current_streak)
+    return longest_streak
+
+nums = [100, 4, 200, 1, 3, 2]
+print(longest_consecutive(nums))
+</code></pre>
+
+    <h3>Length of Longest Substring Without Repeating Characters</h3>
+    <pre><code>def length_of_longest_substring(s):
+    seen = set()
+    start = 0
+    max_length = 0
+    for end in range(len(s)):
+        while s[end] in seen:
+            seen.remove(s[start])
+            start += 1
+        seen.add(s[end])
+        max_length = max(max_length, end - start + 1)
+    return max_length
+
+print(length_of_longest_substring("abcabcbb"))  # Output: 3
+</code></pre>
+
+    <h3>Longest Zero Sum Subarray</h3>
+    <pre><code>def longest_zero_sum_subarray(arr):
+    prefix_sum_indices = {}
+    prefix_sum = 0
+    max_length = 0
+    for i, num in enumerate(arr):
+        prefix_sum += num
+        if prefix_sum == 0:
+            max_length = i + 1
+        elif prefix_sum in prefix_sum_indices:
+            length = i - prefix_sum_indices[prefix_sum]
+            max_length = max(max_length, length)
+        else:
+            prefix_sum_indices[prefix_sum] = i
+    return max_length
+
+arr = [1, 2, -3, 3, -1, 2, -2]
+print(longest_zero_sum_subarray(arr))  # Output: 3
+</code></pre>
+  </section>
+
+  <!-- Day 1 -->
+  <section class="day" aria-labelledby="day1">
+    <h2 id="day1">Day 1: Python Basics + Arrays & Strings</h2>
+
+    <h3>Two Sum</h3>
+    <pre><code>def twoSum(nums, target):
+    lookup = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in lookup:
+            return [lookup[complement], i]
+        lookup[num] = i
+</code></pre>
+
+    <h3>Reverse a String</h3>
+    <pre><code>def reverse_string(s):
+    return s[::-1]
+</code></pre>
+
+    <h3>Valid Anagram</h3>
+    <pre><code>from collections import Counter
+
+def isAnagram(s, t):
+    return Counter(s) == Counter(t)
+</code></pre>
+
+    <h3>Maximum Subarray (Kadane's Algorithm)</h3>
+    <pre><code>def maxSubArray(nums):
+    max_sum = curr = nums[0]
+    for num in nums[1:]:
+        curr = max(num, curr + num)
+        max_sum = max(max_sum, curr)
+    return max_sum
+</code></pre>
+  </section>
+
+  <!-- Day 2 -->
+  <section class="day" aria-labelledby="day2">
+    <h2 id="day2">Day 2: Linked Lists, Stacks, Queues</h2>
+
+    <h3>Reverse a Linked List</h3>
+    <pre><code>class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseList(head):
+    prev = None
+    while head:
+        next_node = head.next
+        head.next = prev
+        prev = head
+        head = next_node
+    return prev
+</code></pre>
+
+    <h3>Detect Cycle in Linked List</h3>
+    <pre><code>def hasCycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+</code></pre>
+
+    <h3>Valid Parentheses</h3>
+    <pre><code>def isValid(s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in mapping.values():
+            stack.append(char)
+        elif char in mapping:
+            if not stack or stack.pop() != mapping[char]:
+                return False
+    return not stack
+</code></pre>
+
+    <h3>Queue using Stacks</h3>
+    <pre><code>class MyQueue:
+    def __init__(self):
+        self.stack_in = []
+        self.stack_out = []
+
+    def push(self, x):
+        self.stack_in.append(x)
+
+    def pop(self):
+        if not self.stack_out:
+            while self.stack_in:
+                self.stack_out.append(self.stack_in.pop())
+        return self.stack_out.pop()
+
+    def peek(self):
+        if not self.stack_out:
+            while self.stack_in:
+                self.stack_out.append(self.stack_in.pop())
+        return self.stack_out[-1]
+
+    def empty(self):
+        return not self.stack_in and not self.stack_out
+</code></pre>
+  </section>
+
+  <!-- Day 3 -->
+  <section class="day" aria-labelledby="day3">
+    <h2 id="day3">Day 3: Trees, Graphs, Recursion, Dynamic Programming</h2>
+
+    <h3>Binary Tree Inorder Traversal</h3>
+    <pre><code>def inorderTraversal(root):
+    res = []
+    def helper(node):
+        if node:
+            helper(node.left)
+            res.append(node.val)
+            helper(node.right)
+    helper(root)
+    return res
+</code></pre>
+
+    <h3>DFS Graph Traversal</h3>
+    <pre><code>def dfs(graph, start):
+    visited = set()
+    def dfs_helper(node):
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph.get(node, []):
+                dfs_helper(neighbor)
+    dfs_helper(start)
+    return visited
+</code></pre>
+
+    <h3>Fibonacci (Memoization)</h3>
+    <pre><code>def fib(n, memo={}):
+    if n <= 1:
+        return n
+    if n not in memo:
+        memo[n] = fib(n-1, memo) + fib(n-2, memo)
+    return memo[n]
+</code></pre>
+
+    <h3>Longest Increasing Subsequence</h3>
+    <pre><code>def lengthOfLIS(nums):
+    if not nums:
+        return 0
+    dp = [1] * len(nums)
+    for i in range(len(nums)):
+        for j in range(i):
+            if nums[i] > nums[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+</code></pre>
+
+    <h3>0/1 Knapsack Problem</h3>
+    <pre><code>def knapsack(weights, values, W):
+    n = len(weights)
+    dp = [[0] * (W+1) for _ in range(n+1)]
+    for i in range(1, n+1):
+        for w in range(W+1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(values[i-1] + dp[i-1][w-weights[i-1]], dp[i-1][w])
+            else:
+                dp[i][w] = dp[i-1][w]
+    return dp[n][W]
+</code></pre>
+
+  </section>
+
+</body>
+</html>
